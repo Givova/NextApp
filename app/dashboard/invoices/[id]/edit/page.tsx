@@ -2,12 +2,18 @@ import Form from "@/app/ui/invoices/edit-form"
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs"
 import { fetchInvoiceById, fetchCustomers } from "@/app/lib/data"
 import { Suspense } from "react"
+import { notFound } from "next/navigation"
 
 async function EditFormWrapper({ id }: { id: string }) {
 	const [invoice, customers] = await Promise.all([
 		fetchInvoiceById(id),
 		fetchCustomers(),
 	])
+
+	if (!invoice) {
+		notFound()
+	}
+
 	return (
 		<Form
 			invoice={invoice}

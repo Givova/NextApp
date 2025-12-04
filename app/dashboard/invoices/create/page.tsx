@@ -3,6 +3,9 @@ import Breadcrumbs from "@/app/ui/invoices/breadcrumbs"
 import { fetchCustomers } from "@/app/lib/data"
 import { Suspense } from "react"
 
+// Помечаем страницу как динамическую — не генерировать статически
+export const dynamic = "force-dynamic"
+
 async function FormWrapper() {
 	const customers = await fetchCustomers()
 	return <Form customers={customers} />

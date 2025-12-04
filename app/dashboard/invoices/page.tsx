@@ -7,6 +7,9 @@ import { InvoicesTableSkeleton } from "@/app/ui/skeletons"
 import { Suspense } from "react"
 import { fetchInvoicesPages } from "@/app/lib/data"
 
+// Помечаем страницу как динамическую — не генерировать статически
+export const dynamic = "force-dynamic"
+
 // Асинхронный компонент, который получает и обрабатывает searchParams
 // Вся асинхронная логика перенесена сюда, чтобы быть внутри <Suspense>
 async function InvoicesContent({

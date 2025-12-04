@@ -11,6 +11,9 @@ import {
 	RevenueChartSkeleton,
 } from "@/app/ui/skeletons"
 
+// Помечаем страницу как динамическую — не генерировать статически
+export const dynamic = "force-dynamic"
+
 export default async function Page() {
 	return (
 		<main>

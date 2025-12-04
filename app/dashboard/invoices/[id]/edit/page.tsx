@@ -4,6 +4,9 @@ import { fetchInvoiceById, fetchCustomers } from "@/app/lib/data"
 import { Suspense } from "react"
 import { notFound } from "next/navigation"
 
+// Помечаем страницу как динамическую — не генерировать статически
+export const dynamic = "force-dynamic"
+
 async function EditFormWrapper({ id }: { id: string }) {
 	const [invoice, customers] = await Promise.all([
 		fetchInvoiceById(id),
@@ -22,9 +25,13 @@ async function EditFormWrapper({ id }: { id: string }) {
 	)
 }
 
-export default async function Page(props: { params: Promise<{ id: string }> }) {
-	const params = await props.params
-	const id = params.id
+// Компонент для загрузки контента с params
+async function EditPageContent({
+	params,
+}: {
+	params: Promise<{ id: string }>
+}) {
+	const { id } = await params
 
 	return (
 		<main>
@@ -42,5 +49,13 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 				<EditFormWrapper id={id} />
 			</Suspense>
 		</main>
+	)
+}
+
+export default function Page(props: { params: Promise<{ id: string }> }) {
+	return (
+		<Suspense fallback={<div>Загрузка...</div>}>
+			<EditPageContent params={props.params} />
+		</Suspense>
 	)
 }
